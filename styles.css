@@ -16,9 +16,9 @@ body {
 }
 
 /* Para navegadores basados en Firefox */
-/*#numberInput[type=number] {
+#numberInput[type=number] {
     -moz-appearance: textfield;
-}*/
+}
 
 input {
     font-size: 20px;
