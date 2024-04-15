@@ -1,5 +1,4 @@
 import { PhoneBook } from './Models/phonebook.js';
-
 const phoneBook = new PhoneBook();
 
 function displayContacts(contacts) {

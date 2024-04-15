@@ -1,8 +1,58 @@
 import { ContactNode } from './contacts.js';
+class QueueNode {
+    constructor(value) {
+        this.value = value;
+        this.next = null;
+    }
+}
+class Queue {
+    constructor() {
+        this.front = null;
+        this.rear = null;
+        this.size = 0;
+    }
 
+    enqueue(value) {
+        const newNode = new QueueNode(value);
+        if (!this.front) {
+            this.front = newNode;
+            this.rear = newNode;
+        } else {
+            this.rear.next = newNode;
+            this.rear = newNode;
+        }
+        this.size++;
+    }
+
+    dequeue() {
+        if (!this.front) {
+            return null;
+        }
+        const removedNode = this.front;
+        this.front = this.front.next;
+        if (!this.front) {
+            this.rear = null;
+        }
+        this.size--;
+        return removedNode.value;
+    }
+
+    isEmpty() {
+        return this.size === 0;
+    }
+
+    peek() {
+        return this.front ? this.front.value : null;
+    }
+
+    getSize() {
+        return this.size;
+    }
+}
 class PhoneBook {
     constructor() {
         this.head = null;
+        this.queue = new Queue();
     }
 
     addContact(name, number) {
@@ -16,6 +66,7 @@ class PhoneBook {
             }
             current.next = contactNode;
         }
+        this.queue.enqueue(contactNode);
         return contactNode;
     }
 
@@ -35,6 +86,7 @@ class PhoneBook {
         }
         if (this.head.contact.number === number) {
             this.head = this.head.next;
+            this.queue.dequeue();
             return;
         }
         let current = this.head;
@@ -45,6 +97,7 @@ class PhoneBook {
         }
         if (current) {
             prev.next = current.next;
+            this.queue.dequeue();
         }
     }
 }
